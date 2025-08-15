@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EditKaro.in – Portfolio</title>
+  <meta name="description" content="Interactive, responsive video portfolio for EditKaro.in – social media marketing & video editing agency." />
+  <!-- <link rel="preconnect" href="https://i.ytimg.com" /> -->
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#" aria-label="EditKaro home">
+        <span class="logo" aria-hidden="true"></span>
+        <span>EditKaro<span style="opacity:.7">.in</span></span>
+      </a>
+      <div class="cta">
+        <a class="btn" href="#portfolio">Portfolio</a>
+        <a class="btn primary" href="#contact">Get a Quote</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero fade-in" id="home">
+      <h1>Social-First Video That Converts</h1>
+      <p>We craft thumb-stopping short‑form, bingeable long‑form, and high‑impact ad creatives. Explore our latest cuts across gaming, football, e‑commerce, documentaries, anime edits, color grading tests and more.</p>
+      <div class="badges">
+        <span class="chip">⚡ 48hr Express Edits</span>
+        <span class="chip">🎯 Performance‑driven Ads</span>
+        <span class="chip">🎮 Gaming & Esports</span>
+        <span class="chip">🏆 Sports Highlights</span>
+      </div>
+    </section>
+
+    <section id="portfolio" aria-labelledby="portfolio-title">
+      <h2 id="portfolio-title" class="visually-hidden">Portfolio</h2>
+
+      <div class="toolbar">
+        <div class="filters" role="tablist" aria-label="Filter by category">
+          <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">All</button>
+          <button class="filter-btn" data-filter="short">Short Form</button>
+          <button class="filter-btn" data-filter="long">Long Form</button>
+          <button class="filter-btn" data-filter="gaming">Gaming</button>
+          <button class="filter-btn" data-filter="football">Football</button>
+          <button class="filter-btn" data-filter="ecommerce">E‑commerce Ads</button>
+          <button class="filter-btn" data-filter="documentary">Documentary</button>
+          <button class="filter-btn" data-filter="grading">Color Grading</button>
+          <button class="filter-btn" data-filter="anime">Anime</button>
+        </div>
+        <label class="search" aria-label="Search portfolio">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21l-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/></svg>
+          <input id="search" type="search" placeholder="Search tags, titles…" />
+        </label>
+      </div>
+
+      <div class="grid" id="grid" aria-live="polite"></div>
+      <div class="empty" id="empty" hidden>No results. Try another filter or clear the search.</div>
+    </section>
+
+    <dialog id="lightbox" aria-labelledby="lb-title">
+      <div class="lightbox-head">
+        <div class="lightbox-title" id="lb-title">Preview</div>
+        <button class="close" aria-label="Close" data-close>✕</button>
+      </div>
+      <div class="lightbox-body">
+        <div class="video-wrap" id="lb-player" role="region" aria-label="Video player"></div>
+      </div>
+    </dialog>
+
+    <section id="contact" aria-labelledby="contact-title">
+      <div class="contact">
+        <h2 id="contact-title">Ready to scale with creative that sells?</h2>
+        <a class="btn primary" href="mailto:hello@editkaro.in">hello@editkaro.in</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div style="display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap;">
+      <small>© <span id="year"></span> EditKaro.in • Built with ♥</small>
+      <div style="display:flex; gap:.6rem; align-items:center;">
+        <a class="chip" href="#home">↑ Back to top</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="backtotop" id="backtotop"><button aria-label="Back to top">↑</button></div>
+
+  <script>
+    // ======== Data: Portfolio Items (edit these with your real work) ========
+    // type: 'yt' for YouTube embed, 'mp4' for direct video file
+    const ITEMS = [
+      { id: 's1', title: 'Snackable Reels – Summer Launch', category: 'short', tags: ['reels', 'UGC', 'product'], type: 'yt', src: 'https://www.youtube.com/embed/DyDfgMOUjCI', thumb: 'https://i.ytimg.com/vi/DyDfgMOUjCI/hqdefault.jpg' },
+      { id: 's2', title: '90‑sec App Teaser', category: 'short', tags: ['app', 'teaser', 'motion'], type: 'yt', src: 'https://www.youtube.com/embed/9bZkp7q19f0', thumb: 'https://i.ytimg.com/vi/9bZkp7q19f0/hqdefault.jpg' },
+      { id: 'l1', title: 'Founder Story – Docu Cut', category: 'long', tags: ['story', 'brand', 'talking-head'], type: 'yt', src: 'https://www.youtube.com/embed/3JZ_D3ELwOQ', thumb: 'https://i.ytimg.com/vi/3JZ_D3ELwOQ/hqdefault.jpg' },
+      { id: 'g1', title: 'Esports Hype Edit', category: 'gaming', tags: ['valorant', 'montage', 'fx'], type: 'yt', src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', thumb: 'https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg' },
+{
+  id: 'f1',
+  title: 'Football Skills & Goals Compilation',
+  category: 'football',
+  tags: ['skills', 'highlights', 'goals'],
+  type: 'yt',
+  src: 'https://www.youtube.com/embed/3OGqhFpmy-Q?autoplay=1&mute=1&rel=0',
+  thumb: 'https://i.ytimg.com/vi/3OGqhFpmy-Q/hqdefault.jpg'
+},
+    { id: 'e1', title: 'E‑commerce Ad – Beauty', category: 'ecommerce', tags: ['ads', 'ugc', 'tiktok'], type: 'yt', src: 'https://www.youtube.com/embed/fJ9rUzIMcZQ', thumb: 'https://i.ytimg.com/vi/fJ9rUzIMcZQ/hqdefault.jpg' },
+      { id: 'd1', title: 'Mini‑Doc: Behind the Scenes', category: 'documentary', tags: ['bts', 'story', 'brand'], type: 'yt', src: 'https://www.youtube.com/embed/kXYiU_JCYtU', thumb: 'https://i.ytimg.com/vi/kXYiU_JCYtU/hqdefault.jpg' },
+      { id: 'c1', title: 'Color Grade: Day‑for‑Night', category: 'grading', tags: ['grading', 'cinematic', 'before/after'], type: 'yt', src: 'https://www.youtube.com/embed/OPf0YbXqDm0', thumb: 'https://i.ytimg.com/vi/OPf0YbXqDm0/hqdefault.jpg' },
+      { id: 'a1', title: 'Anime AMV – Energetic Cut', category: 'anime', tags: ['amv', 'sync', 'fx'], type: 'yt', src: 'https://www.youtube.com/embed/CevxZvSJLk8', thumb: 'https://i.ytimg.com/vi/CevxZvSJLk8/hqdefault.jpg' },
+      { id: 'e2', title: 'UGC Ad – Home Fitness', category: 'ecommerce', tags: ['ads', 'ugc', 'd2c'], type: 'yt', src: 'https://www.youtube.com/embed/SlPhMPnQ58k', thumb: 'https://i.ytimg.com/vi/SlPhMPnQ58k/hqdefault.jpg' },
+      { id: 'f2', title: 'Football Edit – Player Reel', category: 'football', tags: ['reel', 'scout', 'showreel'], type: 'yt', src: 'https://www.youtube.com/embed/3AtDnEC4zak', thumb: 'https://i.ytimg.com/vi/3AtDnEC4zak/hqdefault.jpg' },
+      { id: 'l2', title: 'Podcast – Episode Cutdowns', category: 'long', tags: ['podcast', 'yt', 'repurpose'], type: 'yt', src: 'https://www.youtube.com/embed/60ItHLz5WEA', thumb: 'https://i.ytimg.com/vi/60ItHLz5WEA/hqdefault.jpg' }
+    ];
+
+    // ======== Render Cards ========
+    const grid = document.getElementById('grid');
+    const empty = document.getElementById('empty');
+
+    function cardTemplate(item){
+      return `
+        <article class="card fade-in show" data-category="${item.category}" data-title="${item.title.toLowerCase()}" data-tags="${item.tags.join(' ').toLowerCase()}">
+          <span class="chip badge">${labelFromCategory(item.category)}</span>
+          <a href="#" class="thumb" data-open data-id="${item.id}" aria-label="Open ${item.title} preview">
+            <img loading="lazy" decoding="async" src="${item.thumb}" alt="Thumbnail: ${item.title}" width="480" height="270" />
+            <div class="play"><button class="btn-circle" aria-hidden="true"><span class="triangle"></span></button></div>
+            <div class="overlay">
+              <div class="meta">
+                <div class="title">${item.title}</div>
+                <div class="tags">${item.tags.map(t=>`<span>#${t}</span>`).join('')}</div>
+              </div>
+            </div>
+          </a>
+        </article>`;
+    }
+
+    function labelFromCategory(cat){
+      const map = { short:'Short Form', long:'Long Form', gaming:'Gaming', football:'Football', ecommerce:'E‑commerce Ad', documentary:'Documentary', grading:'Color Grading', anime:'Anime' };
+      return map[cat] || cat;
+    }
+
+    function render(items){
+      grid.innerHTML = items.map(cardTemplate).join('');
+      observeInView();
+    }
+
+    render(ITEMS);
+
+    // ======== Filtering & Search ========
+    const filterBtns = [...document.querySelectorAll('.filter-btn')];
+    const searchInput = document.getElementById('search');
+    let currentFilter = 'all';
+
+    function applyFilters(){
+      const q = searchInput.value.trim().toLowerCase();
+      const cards = [...grid.children];
+      let visible = 0;
+      cards.forEach(card => {
+        const matchCat = currentFilter === 'all' || card.dataset.category === currentFilter;
+        const matchText = !q || card.dataset.title.includes(q) || card.dataset.tags.includes(q);
+        const show = matchCat && matchText;
+        card.style.display = show ? '' : 'none';
+        card.classList.toggle('show', show);
+        if(show) visible++;
+      });
+      empty.hidden = visible !== 0;
+    }
+
+    filterBtns.forEach(btn => btn.addEventListener('click', () => {
+      filterBtns.forEach(b=>{ b.classList.remove('active'); b.setAttribute('aria-selected','false'); });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected','true');
+      currentFilter = btn.dataset.filter;
+      applyFilters();
+    }));
+
+    searchInput.addEventListener('input', applyFilters);
+
+    // ======== Lightbox / Video Preview ========
+    const lb = document.getElementById('lightbox');
+    const lbPlayer = document.getElementById('lb-player');
+    const lbTitle = document.getElementById('lb-title');
+
+    function openLightbox(item){
+      lbTitle.textContent = item.title;
+      if(item.type === 'yt'){
+        const url = item.src.includes('autoplay') ? item.src : item.src + '?autoplay=1&mute=1&rel=0';
+        lbPlayer.innerHTML = `<iframe title="${item.title}" src="${url}" frameborder="0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+      } else if(item.type === 'mp4'){
+        lbPlayer.innerHTML = `<video src="${item.src}" controls autoplay playsinline></video>`;
+      }
+      if(typeof lb.showModal === 'function') lb.showModal(); else lb.setAttribute('open','');
+    }
+
+    function closeLightbox(){
+      lbPlayer.innerHTML = '';
+      if(lb.open) lb.close(); else lb.removeAttribute('open');
+    }
+
+    document.addEventListener('click', (e) => {
+      const a = e.target.closest('[data-open]');
+      if(a){
+        e.preventDefault();
+        const id = a.getAttribute('data-id');
+        const item = ITEMS.find(i=>i.id===id);
+        if(item) openLightbox(item);
+      }
+      if(e.target.matches('[data-close]')){
+        closeLightbox();
+      }
+    });
+
+    lb.addEventListener('click', (e)=>{
+      const rect = lb.querySelector('.video-wrap').getBoundingClientRect();
+      if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right){
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeLightbox(); });
+
+    // ======== In-View Animation ========
+    function observeInView(){
+      if(!('IntersectionObserver' in window)) return;
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){ en.target.classList.add('show'); io.unobserve(en.target); }
+        });
+      }, { threshold: .12 });
+      [...document.querySelectorAll('.card')].forEach(c=> io.observe(c));
+    }
+
+    // ======== Back to top ========
+    const btt = document.getElementById('backtotop');
+    window.addEventListener('scroll', ()=>{
+      const scrolled = window.scrollY > 600;
+      btt.classList.toggle('visible', scrolled);
+    });
+    btt.addEventListener('click', ()=> window.scrollTo({ top:0, behavior:'smooth' }));
+
+    // ======== Year ========
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
